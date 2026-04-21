@@ -26,3 +26,34 @@ I displayed prevIndex to help debugging, and with vite it appeared right away
 If it is your turn to move and you have three pieces on the board and one of your pieces is in the center square, 
 your move must either win or vacate the center square.
 I misread this line and had to adjust the logic
+
+
+Steps to recreate:
+status to check which stage of game it is, as in before or after move 6
+status to check previous click's index
+
+if prevIndex is null: (first click)
+    if before move 6:
+        return if there's a winner or clicked on non-empty square
+    else    
+        return if there's a winner or clicked on empty square or square of opponent
+
+    if clicked on square of our piece
+        set prevIndex to this index
+        return
+else    (second click)
+    if clicked on nonempty square
+        set prevIndex to null and return
+    switch statement for i (current click's index)
+        if clicked on square not adjacent to prevIndex, set prevIndex to null and return
+make a copy of squares
+set the current square in the squares copy to X or O  
+if prevIndex is not null
+    set squares copy at prevIndex to empty
+    if there is no winner (not winning move)
+        if we didn't move center and we have center
+            set prevIndex to null and return
+    set prevIndex to null
+set squares to squares copy
+change xIsNext, increment moves
+

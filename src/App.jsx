@@ -41,7 +41,7 @@ export default function App() {
           return;
         }
 
-      switch (i){
+      switch (i){     //checks if square can be adjacent to previous click
         case 0:
           if(prevIndex != 1 && prevIndex != 3 && prevIndex != 4)
             {
@@ -113,12 +113,12 @@ export default function App() {
       nextSquares[i] = 'O';
     }
 
-    if(prevIndex !== null)
+    if(prevIndex !== null)  //2nd click
     {
-      nextSquares[prevIndex] = null;
-      if (calculateWinner(nextSquares) === null)
+      nextSquares[prevIndex] = null;  
+      if (calculateWinner(nextSquares) === null)  //if this is a winning move, it proceeds
         if(prevIndex != 4 && ((xIsNext && squares[4] == 'X') || (!xIsNext && squares[4] == 'O')))
-        {
+        { //if we didn't move center and we still have center, this move fails (we know it's not a winning move)
           setPrevIndex(null);
           return;
         }

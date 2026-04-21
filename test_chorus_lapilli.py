@@ -155,6 +155,57 @@ class TestChorusLapilli(unittest.TestCase):
         tiles[0].click()
         self.assertTileIs(tiles[0], self.SYMBOL_X)
 
+    def test_move_tile(self):
+        '''Check if tiles can be moved after the 6th move'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        tiles[0].click()    #X
+        tiles[8].click()    #O
+        tiles[1].click()    #X
+        tiles[7].click()    #O
+        tiles[3].click()    #X
+        tiles[2].click()    #O
+
+        tiles[3].click()    #X
+        tiles[4].click()    #X
+        self.assertTileIs(tiles[3], self.SYMBOL_BLANK)
+        self.assertTileIs(tiles[4], self.SYMBOL_X)
+
+    def test_center_1(self):
+        '''Check if center must be moved if move is not winning after move 6'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        tiles[0].click()    #X
+        tiles[8].click()    #O
+        tiles[1].click()    #X
+        tiles[7].click()    #O
+        tiles[4].click()    #X
+        tiles[2].click()    #O
+
+        tiles[1].click()    #X
+        tiles[5].click()    #X
+        self.assertTileIs(tiles[5], self.SYMBOL_BLANK)
+        self.assertTileIs(tiles[1], self.SYMBOL_X)
+        
+        tiles[4].click()    #X
+        tiles[5].click()    #X
+        self.assertTileIs(tiles[4], self.SYMBOL_BLANK)
+        self.assertTileIs(tiles[5], self.SYMBOL_X)
+
+    def test_center_2(self):
+        '''Check if can make winning move while keeping center piece after move 6'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        tiles[0].click()    #X
+        tiles[3].click()    #O
+        tiles[5].click()    #X
+        tiles[7].click()    #O
+        tiles[4].click()    #X
+        tiles[2].click()    #O
+
+        tiles[4].click()    #X
+        tiles[8].click()    #X
+        self.assertTileIs(tiles[4], self.SYMBOL_BLANK)
+        self.assertTileIs(tiles[8], self.SYMBOL_X)
+        
+
 
 # ================= [DO NOT MAKE ANY CHANGES BELOW THIS LINE] =================
 
