@@ -1,0 +1,22 @@
+First, I made a Square component. I turned it into 3 rows of 3 squares and renamed the component Board
+Then, I separated them into Square and Board components.
+I gave the Square component props, specifically, the square's value. 
+Inside the Square component I made a function called handleClick, which is called when the button is clicked.
+Imported useState, removed the value prop from Square and added const [value, setValue] = useState(null); It's initial value is null
+Clicking on a square changes it's value to X
+Made an array for the 9 squares in the Board component
+Now, Square has a value prop and loses its tracking of its value 
+When the square is clicked, it calls onSquareClick, which is now a prop for the Square component 
+handleClick will be passed into onSquareClick, and handleClick will be defined inside Board
+handleClick is given an argument i so the correct square is updated
+
+NOTE: <Square value={squares[0]} onSquareClick={handleClick(0)} /> will not work!
+rendering runs handleClick(0) which rerenders which calls itself infinitely,
+instead I use <Square value={squares[0]} onSquareClick={() => handleClick(0)} /> for the first square
+
+To handle taking turns, keep track of xIsNext, which is used and set in handleClick
+Problem: Can click on the same square multiple times, to fix this, return if that square is not null
+calculateWinner function takes in an array of 9 squares and returns x, o, or null for the winner
+handleClick will return early if calculateWinner returns true 
+added status section, which displays next player or winner
+
