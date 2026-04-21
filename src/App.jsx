@@ -30,9 +30,6 @@ export default function App() {
         if (calculateWinner(squares) || !squares[i] || (xIsNext && squares[i] == 'O') || (!xIsNext && squares[i] == 'X')) {
           return;   //returns if game is over, if clicked on empty square, if clicked on O when we're X and vice versa
         }           //we know we clicked on our turn's "piece"
-        if(i != 4 && ((xIsNext && squares[4] == 'X') || (!xIsNext && squares[4] == 'O'))){
-          return; //if we're not on middle square but middle square is ours, return
-        }
         setPrevIndex(i);
         return;
       }
@@ -119,10 +116,19 @@ export default function App() {
     if(prevIndex !== null)
     {
       nextSquares[prevIndex] = null;
+      if (calculateWinner(nextSquares) === null)
+        if(prevIndex != 4 && ((xIsNext && squares[4] == 'X') || (!xIsNext && squares[4] == 'O')))
+        {
+          setPrevIndex(null);
+          return;
+        }
       setPrevIndex(null);
     }
 
     setSquares(nextSquares);
+
+
+
     setXIsNext(!xIsNext);
     setMoves(moves + 1)
   }

@@ -22,3 +22,7 @@ Notes:
 I realized when I checked if(prevIndex), when the previous index was 0 it acts as if it were null,
 so I had to explicitly check if prevIndex === null
 I displayed prevIndex to help debugging, and with vite it appeared right away
+
+If it is your turn to move and you have three pieces on the board and one of your pieces is in the center square, 
+your move must either win or vacate the center square.
+I misread this line and had to adjust the logic
