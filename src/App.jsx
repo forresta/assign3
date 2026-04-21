@@ -15,19 +15,116 @@ function Square({value, onSquareClick}) {
 export default function App() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [moves, setMoves] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(null);
 
   function handleClick(i) {
-    if (calculateWinner(squares) || squares[i]) {
-      return;
+
+    if(prevIndex === null) {
+      if(moves < 6) {
+        if (calculateWinner(squares) || squares[i]) {
+          return;
+        }
+      }
+      else {  //after move 6
+        if (calculateWinner(squares) || !squares[i] || (xIsNext && squares[i] == 'O') || (!xIsNext && squares[i] == 'X')) {
+          return;   //returns if game is over, if clicked on empty square, if clicked on O when we're X and vice versa
+        }           //we know we clicked on our turn's "piece"
+        if(i != 4 && ((xIsNext && squares[4] == 'X') || (!xIsNext && squares[4] == 'O'))){
+          return; //if we're not on middle square but middle square is ours, return
+        }
+        setPrevIndex(i);
+        return;
+      }
     }
+    else {  //2nd click 
+      if(squares[i])  //returns if 2nd click on non-empty square
+        {
+          setPrevIndex(null);
+          return;
+        }
+
+      switch (i){
+        case 0:
+          if(prevIndex != 1 && prevIndex != 3 && prevIndex != 4)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 1:
+          if(prevIndex == 1 || prevIndex == 6 || prevIndex == 7 || prevIndex == 8)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 2:
+          if(prevIndex != 1 && prevIndex != 5 && prevIndex != 4)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 3:
+          if(prevIndex === 3 || prevIndex === 2 || prevIndex === 5 || prevIndex === 8) 
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 5:
+          if(prevIndex == 5 || prevIndex == 0 || prevIndex == 3 || prevIndex == 6)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 6:
+          if(prevIndex != 3 && prevIndex != 4 && prevIndex != 7)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 7:
+          if(prevIndex == 1 || prevIndex == 0 || prevIndex == 7 || prevIndex == 2)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        case 8:
+          if(prevIndex != 5 && prevIndex != 4 && prevIndex != 7)
+            {
+              setPrevIndex(null);
+              return;
+            }
+            break;
+        default:
+          break;
+        } //end of switch statement
+      
+    }
+
+
+
     const nextSquares = squares.slice();
     if (xIsNext) {
       nextSquares[i] = 'X';
     } else {
       nextSquares[i] = 'O';
     }
+
+    if(prevIndex !== null)
+    {
+      nextSquares[prevIndex] = null;
+      setPrevIndex(null);
+    }
+
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
+    setMoves(moves + 1)
   }
 
   const winner = calculateWinner(squares);

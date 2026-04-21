@@ -1,0 +1,24 @@
+Plan: 
+status to check which stage of game it is, as in before or after move 6
+if after move 6, handleClick behaves differently:
+returns if clicked on empty square or square of opponent
+if clicked on square of our piece
+    if the 5th square (middle) is ours
+        return if this square isn't 5th
+    can click on empty adjacent square :
+        check if [i-4, i+4] is within [0,8], if so check if empty, if so can be clicked
+        otherwise, return (resets)
+then the same logic 
+
+implementing handleClick, I realize the same handleClick function is used for both clicks after move 6
+idea: another state to check which click it is. 
+I realize the 2nd click must 'remember' the index of the first, 
+idea: state will keep track of 1st click index
+
+trying to think of an elegant way to check if a square is adjacent,
+brute force for now
+
+Notes:
+I realized when I checked if(prevIndex), when the previous index was 0 it acts as if it were null,
+so I had to explicitly check if prevIndex === null
+I displayed prevIndex to help debugging, and with vite it appeared right away
